@@ -1,0 +1,73 @@
+// Квадратное уравнение axsqr + bx + c = 0
+// a ne ravno 0
+// discriminant D = bsqr - 4ac; if D < 0  - net kornei; if D = 0 - odin koren; if D > 0 - two roots
+// 
+
+
+import Foundation
+
+func qeRoots (_ a: Double, _ b: Double, _ c: Double) {
+
+// check if a !=0
+if a == 0 { print ("THIS IS NOT A QE, PLEASE CHECK IF IS NOT A 0")}
+else
+{print ("Исходное уравнение: \(a)xsqr + \(b)x + \(c) = 0" )}
+
+// discriminant calculating
+let d: Double = b * b - 4 * a * c    
+print ("Discriminant = \(d)")
+if d < 0 {print ("No roots")}
+else {print ("We have 2 roots:")}
+if d == 0 {print ("We have only one root:")}
+
+// roots calculating
+let x1: Double = (-b + round((sqrt(d)))) / 2 * a
+let x2: Double = (-b - round((sqrt(d)))) / 2 * a  
+print ("roots are:", x1, "and", x2)
+
+}
+
+qeRoots(2, 9, 5)
+
+
+
+
+
+//Прямоугольный треугольник catets a and b. S = a*b /2, c sqr = a sqr + b sqr, P = a + b + sqrt(c)
+
+/*
+import Foundation
+
+func rightTriang (_ a: Double, _ b: Double) {
+
+let s: Double = (a * b) / 2
+let c: Double = (a * a) + (b * b)
+let p: Double = a + b + round(sqrt(c))
+print ("Площадь нашего треугольника равна \(s), периметр равен \(p), гипотенуза равна \(round(sqrt(c)))")
+
+}
+rightTriang (4, 5)
+*/
+
+
+
+// Bank a = sum, b = percent, after 5 years
+
+/*
+import Foundation
+
+func bankProc (_ a: Int, _ b: Int) {
+var sumCounted: Int = (a + (a * b/100))
+var i = 1
+
+repeat {
+sumCounted = (sumCounted + (sumCounted * b/100))
+i += 1
+
+} while i <= 4
+print ("Через 5 лет \(a) рублей с процентной ставкой \(b)% вырастут до \(sumCounted) рэ. ")
+}
+
+
+bankProc (1000, 6)
+*/
