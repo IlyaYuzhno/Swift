@@ -1,0 +1,87 @@
+import Foundation
+
+/* проверка чётности
+func f (_ a: Int) {
+if a % 2 == 0 {print ("Число \(a) чётное") 
+}
+else {print ("Число \(a) нечётное") 
+}
+}
+f (12)
+*/
+
+/* деление на 3 без остатка
+func f (_ a: Int) {
+if a % 3 == 0 {print ("Число \(a) делится на 3 без остатка") 
+}
+else {print ("Число \(a) не делится на 3 без остатка") 
+}
+}
+f (12)
+*/
+
+/* создать возрастающий массив из 100 чисел
+
+var a: [Int] = Array (1...100)
+
+*/
+
+
+/* удалить из этого массива все четные числа и все числа, которые не делятся на 3
+var a: [Int] = Array (1...100)
+func deleteNumbers (_ number: Array<Int> ) {
+var numbers: [Int] = number
+numbers.removeAll(where:{$0 % 2 == 0})
+numbers.removeAll(where:{$0 % 3 != 0})
+print (numbers)
+}
+deleteNumbers(a)
+*/
+
+
+/* Написать функцию, которая добавляет в массив новое число Фибоначчи, и добавить при помощи нее 100 элементов.
+// Числа Фибоначчи определяются соотношениями Fn=Fn-1 + Fn-2
+
+func fibonacci (_ a: Double, _ b: Double) {
+var newArray:[Double] = [a, b]
+var i = 2
+repeat {
+let c: Double = newArray[i-1] + newArray[i-2]
+newArray.append(c)
+i += 1
+} while i <= 99
+print (newArray)
+print ("Длина массива с простыми числами:\(newArray.count)")
+}
+fibonacci(0, 1)
+*/
+
+/* simple fibonacci code
+var g: [Int64] = [0,1]
+var i = 2
+repeat {
+var k: Int64 = g[i-1] + g[i-2]
+g.append(k)
+i += 1
+} while i <= 92
+print (g)
+*/
+
+
+
+/* заполнить массив из 100 элементов различными простыми числами.
+
+func simpleNumb (_ n: Int) {
+var x: [Int] = Array (2...n*n)
+var y = [2]
+var i = 0
+repeat {
+x.removeAll(where:{$0 % y[i] == 0})  //цикл вычисления простых чисел
+y.append(x[0])
+i += 1
+} while y.count <= n
+print("После \(n) итераций от массива целых чисел осталось:", x)
+print("Найденные простые числа:", y ,"\n Длина массива с простыми числами сейчас", y.count, "простое число")
+}
+simpleNumb (30)
+*/
