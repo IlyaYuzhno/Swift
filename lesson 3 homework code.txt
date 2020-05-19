@@ -1,0 +1,95 @@
+import Foundation
+
+// перечисляем действия
+enum AutoAction: String {
+ case engineOn = "On"
+ case engineOff = "Off" 
+ case windowOpen = "открыто"
+ case windowClose = "закрыто"
+ case load = "загружен"
+ case unLoad = "пуст"
+var description: String {return self.rawValue} // тут получаем rawValue кейсов перечисления
+} 
+
+// инициализируем перечисления
+var stop = AutoAction.engineOff.description
+var start = AutoAction.engineOn.description
+var open = AutoAction.windowOpen.description
+var close = AutoAction.windowClose.description
+var unLoad = AutoAction.unLoad.description
+
+/*
+// создаём легковую с заданными параметрами. С пустыми параметрами будет грузовик далее.
+
+struct Auto {
+let model = "Toyota"
+let year = 2000
+let trunkSpace = 4000
+var engineState = "on"
+var windowOpen = "closed"
+
+// описываем методы. Метод будет сразу выводить состояние в консоль  
+mutating func engine(_ y:String ) {
+self.engineState = y
+print("Двигатель \(self.model)", self.engineState)
+}
+mutating func window(_ y:String ) {
+self.windowOpen = y
+print("Окно \(self.model)", self.windowOpen)
+}
+mutating func load(_ y:Int ) {
+print("Загружено \(y) груза в багажник \(self.model), свободного места осталось \(self.trunkSpace - y)")
+}
+}
+
+// инициализируем экземпляр
+var toyota = Auto()
+
+// делаем что-нибудь с машиной, мутируя структуру методом 
+toyota.engine(start) //заводим - start - или выключаем - stop - двигатель 
+toyota.window(open) // открываем - open - или закрываем - close -  окно
+toyota.load(340) // грузим в багажник груз 
+*/
+
+//создаём грузовик
+struct Truck {
+
+let model:String
+let year: Int
+var trunkSpace: Int
+var engineState: String
+var windowsOpen: String
+var trunkSpaceUsed: String
+
+// также описываем методы с выводом в консоль
+mutating func engine(_ y:String ) {
+self.engineState = y
+print("Двигатель \(self.model)", self.engineState)
+}
+mutating func window(_ y:String ) {
+self.windowsOpen = y
+print("Окно \(self.model)", self.windowsOpen)
+}
+mutating func load(_ y:Int ) {
+    switch y {
+case (self.trunkSpace + 1)...:
+self.engineState = "Off"
+print("\(self.model) перегружен и никуда не поедет, двигатель \(self.engineState)")
+default:
+print("\(self.model) загружен на \((y * 100) / self.trunkSpace) процентов") //вычисляем процент загрузки
+}
+}
+mutating func unload(_ y:String ) {
+self.trunkSpaceUsed = y    
+print ("\(self.model) \(y)")
+}
+}
+
+// инициализируем экземпляр и передаём начальные условия
+var gruzovik = Truck (model: "Kamaz", year: 2010, trunkSpace: 10000, engineState: "Off", windowsOpen: "Closed", trunkSpaceUsed: "Загружен")
+
+// мутируем структуру
+gruzovik.engine(start) //заводим - start - или выключаем - stop - двигатель 
+gruzovik.window(close) // открываем - open - или закрываем - close -  окно
+gruzovik.load(1500) // грузим в кузов груз, если перегруз(больше trunkSpace) - выключаем двигатель
+//gruzovik.unload(unLoad) // разгружаем грузовик
