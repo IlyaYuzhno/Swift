@@ -1,0 +1,143 @@
+import Foundation
+
+//енум из предыдущей домашки
+enum AutoAction: String {
+ case engineOn = "On"
+ case engineOff = "Off" 
+ case windowOpen = "открыто"
+ case windowClose = "закрыто"
+ case load = "загружен"
+ case unLoad = "пуст"
+
+} 
+
+//енум моделей авто
+enum Model {
+    case toyota, honda, ferrari, lamborgini, kamaz, volvo, man 
+}
+
+// енум окрасок
+enum Color {
+    case красный, белый, чёрный, жёлтый
+
+}
+
+// енум вариантов скоростей
+enum MaxSpeed:Int {
+    case truck = 80
+    case slow = 100
+    case normal = 200
+    case fast = 300
+    case superfast = 400
+}
+
+// енум вариантов загрузки
+enum MaxLoad:Int {
+    case sportcar = 200
+    case one = 1000
+    case two = 2000
+    case three = 3000
+    case four = 4000
+    case five = 5000
+    case ten = 10000
+}
+
+// описываем суперкласс
+class Car {
+
+    var model: Model
+    var color: Color
+    var year: Int
+    var trunkSpace: Int
+    var engineState: AutoAction
+    var windowsState: AutoAction
+    var load: AutoAction   
+
+init (model: Model, color: Color, year: Int, trunkSpace: Int, engine: AutoAction, window: AutoAction, load: AutoAction) {
+    self.model = model
+    self.color = color
+    self.year = year
+    self.trunkSpace = trunkSpace
+    self.engineState = engine
+    self.windowsState = window
+    self.load = load
+}
+//создаём методы
+func Status () {
+ print (self.load.rawValue)
+
+}
+
+func Color () {
+ print(self.color)
+
+}
+}
+
+// описываем подкласс спорткара
+class SportCar: Car {
+   var maxSpeed: MaxSpeed
+   let maxLoad = MaxLoad.sportcar.rawValue
+
+    init (model: Model, color: Color, year: Int, trunkSpace: Int, engine: AutoAction, window: AutoAction, load: AutoAction, maxSpeed: MaxSpeed)
+   { self.maxSpeed = maxSpeed 
+
+    super.init (model: model, color: color, year: year, trunkSpace: trunkSpace, engine: engine, window: window, load: load)
+}
+
+// оверрайдим метод из суперкласса
+override func Status () {
+    print("\(self.color) спорткар \(self.model) \(self.load.rawValue), окно \(self.windowsState.rawValue), двигатель \(self.engineState.rawValue), его максимальная скорость \(maxSpeed.rawValue) км/ч и максимальная загрузка \(maxLoad) кг " )
+}
+
+//создаём собственный метод
+func Boost (_ a: Int) {
+a > maxSpeed.rawValue ? print ("До \(a) \(self.model) разогнаться невозможно, максимально допустимая скорость \(maxSpeed.rawValue)."): print ("До \(a) разгонемся изи.")
+}
+
+}
+
+
+// описываем подкласс грузовика
+class TrunkCar: Car {
+    var maxLoad: MaxLoad
+    let maxSpeed = MaxSpeed.truck.rawValue
+
+    init (model: Model, color: Color, year: Int, trunkSpace: Int, engine: AutoAction, window: AutoAction, load: AutoAction, maxLoad: MaxLoad)
+    { self.maxLoad = maxLoad 
+
+    super.init (model: model, color: color, year: year, trunkSpace: trunkSpace, engine: engine, window: window, load: load)
+}
+
+//оверрайдим метод из суперкласса
+override func Status () {
+    print("\(self.color ) грузовик \(self.model) \(self.load.rawValue), окно \(self.windowsState.rawValue), двигатель \(self.engineState.rawValue), его максимальная загрузка \(maxLoad.rawValue) кг и максимальная скорость \(maxSpeed) км/ч " )
+}
+
+//создаём собственный метод
+func Load (_ a:Int) {
+a > maxLoad.rawValue ? print ("Грузовик \(self.model) нельзя загрузить \(a) кг, его максимальная загрузка \(maxLoad.rawValue)."): print ("Пихнём!!! Можно догрузить ещё \(maxLoad.rawValue - a) кг.")
+}
+}
+
+//создаём экземпляры
+var a = SportCar (model: .ferrari, color: .красный, year: 2010, trunkSpace: 200, engine: .engineOff, window: .windowOpen, load: .load, maxSpeed: .fast)
+var b = TrunkCar (model: .kamaz, color: .чёрный, year: 2015, trunkSpace: 5000, engine: .engineOn, window: .windowClose, load: .unLoad, maxLoad: .ten)
+var c = SportCar (model: .lamborgini, color: .жёлтый, year: 2019, trunkSpace: 200, engine: .engineOn, window: .windowClose, load: .unLoad, maxSpeed: .superfast)
+var d = TrunkCar (model: .volvo, color: .белый, year: 2011, trunkSpace: 5000, engine: .engineOff, window: .windowOpen, load: .load, maxLoad: .five)
+
+
+// проверяем, результат смотрим в консоли
+a.Status() // статус первого спорткара
+a.Boost(500) // пытаемся разогнаться на спорткаре
+
+b.Status() // статус первого грузовика
+b.Load(1000) // грузим грузовик
+
+c.Status() // статус второго спорткара
+c.Boost(300) // разгоняемся
+
+d.Status() // статус второго грузовика
+d.Load(6000) // пытаемся его нагрузить
+
+
