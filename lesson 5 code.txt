@@ -1,0 +1,121 @@
+import Foundation
+
+// создаём протокол
+protocol Car {
+ var fuel: String {get}
+ 
+ func fuelType (_ fuel: String)
+
+}
+
+// расширение по топливу
+extension Car {
+    func fuelType (_ fuel:String) {
+    switch fuel {
+    case "бензин":
+    print ("Тачка на \(fuel)")
+    case "дизель":
+    print ("Тачка на \(fuel)")
+    default:
+    print ("Машина на этом не поедет")
+    }
+    }
+}
+
+// расширение по окнам
+extension Car {
+    func window (_ x: String) {
+     print ("Окно \(x)")
+    }
+}
+
+// расширение по двигателю
+extension Car {
+     func engine (_ x:String) {
+        print ("Двигатель \(x)")
+       }   
+
+}
+
+// расширение по загрузке спорткара
+extension Car {
+    func LoadSport (_ x:Int) {
+     let y = 200   
+     x <= y ? print ("Всё ок, едем"): print ("Спорткар не поедет, перегруз")
+    }
+}
+
+// расширение по загрузке цистерны
+extension Car {
+    func LoadTunk (_ x:Int) {
+     let y = 2000   
+     x <= y ? print ("Всё ок, цистерна выехала"): print ("Перегруз цистерны")
+    }
+}
+
+// класс спорткара с протоколом
+class sportCar: Car {
+ var name: String
+ var fuel: String
+ var maxSpeed: Int
+ var boost: Int
+ var window: String
+ var engine: String
+ var load: Int
+
+ init (name: String, maxSpeed:Int, boost: Int, fuel: String, window: String, engine: String, load: Int){
+     self.name = name
+     self.maxSpeed = maxSpeed
+     self.boost = boost
+     self.fuel = fuel
+     self.window = window
+     self.engine = engine
+     self.load = load
+ }
+
+}
+// выводим в консоль
+extension sportCar:CustomStringConvertible {
+   var description: String {
+       return "Если двигатель \(engine), окна \(window) и в багажнике \(load) кг, спорткар \(name) на \(fuel) разгоняется до \(maxSpeed) за \(boost) секунд."
+       
+   }
+
+}
+
+// класс цистерны с протоколом
+class tunkCar: Car {
+  var name: String
+  var fuel: String
+  var tunkVolume: Int
+  
+  init (name: String, tunkVolume: Int, fuel: String) {
+     self.name = name
+     self.tunkVolume = tunkVolume
+     self.fuel = fuel
+}
+}
+
+// в консоль его
+extension tunkCar:CustomStringConvertible {
+   var description: String {
+       return "Товарищ водитель! В \(name) залей \(fuel), потом заполни цистерну \(tunkVolume) литрами пива!!!"
+   }
+
+}
+
+
+// экземпляр спорткара
+var a = sportCar (name: "Ferrari", maxSpeed: 300, boost: 10, fuel: "ослиная моча", window: "open", engine: "On", load: 500)
+
+// экземпляр цистерны
+var b = tunkCar (name: "ЗиЛ", tunkVolume: 5000, fuel: "бензин")
+
+// делаем с ними что-нибудь
+print(b) //выводим в консоль на основании изменённого стрингконвёртибл
+print(a) //выводим в консоль на основании изменённого стрингконвёртибл
+a.fuelType(a.fuel) // проверяем и применяем экстеншн по топливу
+a.window(a.window) // проверяем и применяем экстеншн по окнам
+a.engine(a.engine) // проверяем и применяем экстеншн по двигателю
+a.LoadSport(a.load) // проверяем и применяем экстеншн по загрузке спорткара
+b.LoadTunk(b.tunkVolume) // проверяем и применяем экстеншн по загрузке цистерны
