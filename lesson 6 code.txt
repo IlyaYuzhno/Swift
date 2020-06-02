@@ -1,0 +1,120 @@
+import Foundation
+
+class Cookie {
+}
+var pechenka = Cookie()
+
+class Bun {
+}
+var bulka = Bun()
+
+
+
+struct Queue<T> {
+ var elements: [T] = []
+ var bakery = ["булка", "пирожок", "круассан", "пирожное", "конфета"] // для строковой очереди
+
+// функция добавления элементов в очередь для разных типов
+ mutating func add (_ element: T, _ x: Int) {
+     for _ in 0...(x - 1) {
+       if T.self == Double.self  {
+         let t = element as! Double
+         let z = round(Double.random(in: 0...t))
+         elements.insert(z as! T, at: 0)}
+       else if T.self == Int.self  {
+         let t = element as! Int
+         let z = Int.random(in: 0...t)
+         elements.insert(z as! T, at: 0)}
+       else if T.self == String.self  {
+         let q = element as! String
+         bakery.append(q)
+         let a = Int.random(in: 0...(bakery.count - 1))
+         elements.insert(bakery[a] as! T, at:0)
+        }
+        
+       else { elements.insert(element, at: 0)}
+}
+     print("В очереди \(elements) сейчас \(elements.count) элементов")
+}
+// удаление из очереди
+ mutating func remove () {
+     print("Удалено \(elements.removeLast())")
+     print("В очереди остались \(elements)")
+}
+
+ mutating func filter (_ x:Int) {
+    if T.self == Int.self {
+     let n = elements.filter{ $0 as! Int % x == 0 }
+     print ("После фильтрации имеем \(n)")
+    }
+ } 
+
+ mutating func sinus () {
+    if T.self == Double.self {
+     let n = elements.map{sin($0 as! Double)}
+     print ("Синусы значений очереди \(n)")
+    }
+ } 
+
+ mutating func roots () {
+    if T.self == Double.self {
+     let n = elements.map{sqrt($0 as! Double)}
+     print ("Корни значений очереди \(n)")
+    }
+ } 
+
+// подсчёт наименований в штуках для стринговой очереди с выпечкой
+ mutating func bakeryCount () {
+    if T.self == String.self {
+    var c: [String:Int] = [:]
+    var i = 0
+        repeat { 
+            var t = 0; var x = 0
+        repeat {
+            if bakery[i] == elements[t] as! String {x += 1}  
+            t += 1 
+        } while t < elements.count
+            c[bakery[i]] = x
+            i += 1
+        } while i < bakery.count
+            print ("В штуках в очереди сейчас \(c)")
+        }
+}
+
+
+subscript (o: Int ) -> T? {
+   if o > self.elements.count {return nil}
+   else {return self.elements[o]}
+}
+}
+
+var a = Queue<Cookie>() //очередь для класса печенек
+//a.add(pechenka, 5) // добавили 5 печенек
+//a.remove() // удалили первую добавленную печеньку
+
+var b = Queue<Bun>() // очередь для класса булок
+//b.add(bulka, 4)// добавили 4 булки
+//b.add(bulka, 1)// добавили ещё 1 булку
+//b.add(bulka, 2)// добавили ещё 2 булки
+//b.remove() // удалили последнюю булку
+//print(b[2]!) // проверили сабскриптом вторую позицию в очереди
+
+var c = Queue<String>() // строковая очередь
+c.add("торт", 10) // добавляем в очередь 10 элементов из массива bakery + элемент по желанию - торт в данном случае
+//print(c[6]!) // сабскриптом смотрим, что за элемент по индексу
+c.bakeryCount() // считаем, сколько у нас в очереди каких элементов
+//c.remove() // удаляем из очереди последний элемент
+
+var d = Queue<Double>() // очередь Double
+//d.add(157, 10) // записываем значения в очередь
+//d.sinus() // синусы значений из очереди
+//d.roots() //квадратные корни 
+//d.remove() // удаляем последнее значение из очереди
+//print(d[4]!) // сабскриптом смотрим, что за элемент по индексу
+//print(d[12]) // возвращаем nil при несуществующем индексе
+
+var e = Queue<Int>() // очередь Int
+//e.add(157, 10) // записываем значения в очередь
+//e.filter(3) // фильтруем по остатку деления на число в параметре
+
+
