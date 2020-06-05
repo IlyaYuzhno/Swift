@@ -1,0 +1,62 @@
+import Foundation
+
+// создаём эрроры
+enum GarageError: Error {
+case noSuchCar  
+case noSuchFuel
+case overLoad
+
+}
+
+
+// создаём класс - гараж с машинами в нём, выбираем одну из машин, заправляем её, грузим и едем.
+class Garage {
+ let cars = ["honda", "toyota", "lada", "ferrari"]
+ let fuelType = ["diesel", "gasoline"]
+
+ func choose (_ model: String) throws {                        // метод выбора машины
+
+    guard cars.contains(model) else {throw GarageError.noSuchCar}
+     
+     
+   
+   print ("Из гаража выбрана \(model)")
+}
+
+ func fuel (_ fuel: String) throws {                           // метод заправки топливом
+
+    guard fuelType.contains(fuel) else {throw GarageError.noSuchFuel}
+     
+     
+   
+   print ("Бак заправлен \(fuel), можно загружать багажник")
+}
+
+ func load (_ load: Int) throws {                              // метод загрузки багажника
+
+    guard load <= 500 else {throw GarageError.overLoad}
+     
+     
+   
+   print ("Багажник загружен на \(load) кг, всё ок, можно ехать")
+}
+
+
+} 
+
+var a = Garage()       // экземпляр гаража
+
+// выбираем машину
+do {
+try a.choose("toyota")
+} catch GarageError.noSuchCar {print ("Нет такой машины в гараже")}  // ловим ошибку noSuchCar, если выбранной машины нет в гараже
+
+do {
+try a.fuel("diesel")
+} catch GarageError.noSuchFuel {print ("На этом машина не поедет")} // ловим ошибку noSuchFuel, если пытаемся заправить машину не дизелем или газолином
+
+do {
+try a.load(500)
+} catch GarageError.overLoad {print ("Перегруз, никуда не едем")} // ловим ошибку overLoad, если грузим больше 500 кг.
+
+
